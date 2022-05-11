@@ -3,8 +3,8 @@ package ru.geekbrains.dao;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+import ru.geekbrains.entity.Customer;
 import ru.geekbrains.entity.Product;
 import ru.geekbrains.session.SessionFactoryUtils;
 
@@ -14,57 +14,52 @@ import java.util.List;
 @Repository
 @Transactional
 @ComponentScan("ru.geekbrains.session")
-public class ProductDaoImpl implements Dao{
+public class CustomerDao {
 
     @Autowired
     private SessionFactoryUtils sessionFactoryUtils;
 
-    public ProductDaoImpl(SessionFactoryUtils sessionFactoryUtils) {
+    public CustomerDao(SessionFactoryUtils sessionFactoryUtils) {
         this.sessionFactoryUtils = sessionFactoryUtils;
     }
 
 
-    @Override
-    public Product findById(Long id) {
+    public Customer findById(Long id) {
         try (Session session = sessionFactoryUtils.getSession()){
             session.beginTransaction();
-            Product product = session.get(Product.class, id);
+            Customer customer = session.get(Customer.class, id);
             session
                     .getTransaction()
                     .commit();
-            return product;
+            return customer;
         }
     }
 
-    @Override
-    public List<Product> findAll() {
+    public List<Customer> findAll() {
         try (Session session = sessionFactoryUtils.getSession()) {
             session.beginTransaction();
-            List<Product> products = session.createQuery("select p from Product p").getResultList();
+            List<Customer> customers = session.createQuery("select c from Customer c").getResultList();
             session.getTransaction().commit();
-            return products;
+            return customers;
         }
     }
 
-    @Override
     public void deleteById(Long id) {
         try (Session session = sessionFactoryUtils.getSession()) {
             session.beginTransaction();
-            Product product = session.get(Product.class, id);
-            session.delete(product);
+            Customer customer = session.get(Customer.class, id);
+            session.delete(customer);
             session.getTransaction().commit();
         }
     }
 
-    @Override
-    public Product saveOrUpdate(Product product) {
+    public Customer saveOrUpdate(Customer customer) {
         try (Session session = sessionFactoryUtils.getSession()) {
             session.beginTransaction();
-            session.saveOrUpdate(product);
+            session.saveOrUpdate(customer);
             session.getTransaction().commit();
-            return product;
+            return customer;
         }
     }
-
-
 }
+
