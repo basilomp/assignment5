@@ -1,3 +1,13 @@
+h3 {
+    clear: both;
+    display: inline;
+    vertical-align: bottom;
+    padding-top: 20px;
+    padding-right: 20px;
+
+}
+
+
 .btn:hover {
     background-color: white;
     color: black;
@@ -21,4 +31,15 @@
 
 .remove-btn:hover {
     border: 2px solid red;
+}
+
+
+.filter {
+    display: inline-block;
+
+}
+
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
