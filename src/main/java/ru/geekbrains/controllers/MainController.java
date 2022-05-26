@@ -1,16 +1,18 @@
 package ru.geekbrains.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.geekbrains.dto.ProductDto;
 import ru.geekbrains.entity.Product;
 import ru.geekbrains.services.CustomerService;
 import ru.geekbrains.services.ProductService;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping()
+@RequestMapping("/app/api/v1/products")
 public class MainController {
 
     @Autowired
@@ -19,33 +21,53 @@ public class MainController {
     @Autowired
     private CustomerService customerService;
 
-    @GetMapping("/products/{id}")
-    public Product findProduct(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    public ProductDto findProduct(@PathVariable Long id) {
         return productService.findById(id);
     }
 
 
-    @GetMapping("/products")
-    public List<Product> getProducts() {
-        return productService.getAllProducts();
+//    @GetMapping("/products")
+//    public List<Product> getProducts() {
+//        return productService.getAllProducts();
+//    }
+
+
+    @GetMapping()
+    public Page<Product> getProducts(@RequestParam(name = "p", defaultValue = "1") Integer page) {
+        if(page < 1) {
+            page = 1;
+        }
+        return productService.find(page);
     }
 
-    @PostMapping("/products")
-    public Product createProduct(@RequestParam String title, int cost) {
-        return productService.createProduct(title, cost);
+    @PostMapping()
+    public Product createProduct(@RequestBody Product product) {
+        if(product.getId() != null) {
+            product.setId(null);
+        }
+        return productService.addProduct(product);
     }
 
-    @DeleteMapping ("/products/remove")
+    @DeleteMapping ("/remove")
     public void removeFromList(@RequestParam("id") Long id) {
         productService.deleteById(id);
     }
 
-    @GetMapping("/products/findBetween")
+    @PutMapping()
+    public Product updateStudent(@RequestBody Product product) {
+        return productService.addProduct(product);
+    }
+    @GetMapping("/findBetween")
     public List<Product> findByCostBetween(@RequestParam(name = "min", defaultValue = "0") int min,
                                            @RequestParam(name = "max") int max) {
         System.out.println(productService.findByCostBetween(min, max));
         return productService.findByCostBetween(min, max);
     }
+
+//    public Product updateProduct(@RequestBody Product product) {
+//        return productService.creat
+//    }
 
 //    @GetMapping("/products/findLessExpensive")
 //    public List<Product> findLessExpensive(@RequestParam int max) {
