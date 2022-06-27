@@ -1,11 +1,28 @@
 angular.module('products', []).controller('indexController', function ($scope, $http) {
-    const contextPath = 'http://localhost:8189/products';
+    const contextPath = 'http://localhost:8189/shop';
+
+
 
     $scope.loadProducts = function () {
         $http.get(contextPath + '/products')
             .then(function (response) {
-                $scope.productList = response.data;
+                    $scope.productList = response.data;
             });
+    };
+
+    $scope.filterProducts = function (min, max) {
+        console.log($scope.filterPrice)
+        $http({
+            url: contextPath + '/products/findBetween',
+            method: 'get',
+            params:
+                {
+                    min: $scope.filterPrice.min,
+                    max: $scope.filterPrice.max,
+                }
+        }).then(function (response) {
+            $scope.productList = response.data;
+        });
     };
 
     $scope.removeFromList = function (id) {
@@ -30,19 +47,6 @@ angular.module('products', []).controller('indexController', function ($scope, $
             }
         });
     };
-
-    // $scope.changeScore = function (clientId, delta){
-    //     $http({
-    //         url: contextPath + '/client/change_score',
-    //         method: 'GET',
-    //         params: {
-    //             clientId: clientId,
-    //             delta: delta
-    //         }
-    //     }).then(function (response){
-    //         $scope.loadClients();
-    //     });
-    // };
 
     $scope.loadProducts();
 

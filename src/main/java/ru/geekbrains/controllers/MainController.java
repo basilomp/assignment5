@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping()
 public class MainController {
 
     @Autowired
@@ -22,6 +23,7 @@ public class MainController {
     public Product findProduct(@PathVariable Long id) {
         return productService.findById(id);
     }
+
 
     @GetMapping("/products")
     public List<Product> getProducts() {
@@ -39,19 +41,20 @@ public class MainController {
     }
 
     @GetMapping("/products/findBetween")
-    public List<Product> findByCostBetween(@RequestParam int min, @RequestParam int max) {
+    public List<Product> findByCostBetween(@RequestParam(name = "min", defaultValue = "0") int min,
+                                           @RequestParam(name = "max") int max) {
+        System.out.println(productService.findByCostBetween(min, max));
         return productService.findByCostBetween(min, max);
     }
 
-    @GetMapping("/products/findLessExpensive")
-    public List<Product> findLessExpensive(@RequestParam int max) {
-        return productService.findByCostLessThan(max);
-
-    }
-
-    @GetMapping("/products/findMoreExpensive")
-    public List<Product> findMoreExpensive(@RequestParam int min) {
-        return productService.findByCostBiggerThan(min);
-    }
+//    @GetMapping("/products/findLessExpensive")
+//    public List<Product> findLessExpensive(@RequestParam int max) {
+//        return productService.findByCostLessThan(max);
+//    }
+//
+//    @GetMapping("/products/findMoreExpensive")
+//    public List<Product> findMoreExpensive(@RequestParam int min) {
+//        return productService.findByCostBiggerThan(min);
+//    }
 
 }

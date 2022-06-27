@@ -38,12 +38,12 @@ public class ProductService {
         return productRepository.findProductWithCostBetween(min, max);
     }
 
-    public List<Product> findByCostBiggerThan(int min) {
-        return productRepository.findProductByCostBiggerThan(min);
-    }
-
-    public List<Product> findByCostLessThan(int max) {
-        return productRepository.findProductByCostLessThan(max);
-    }
+//    public List<Product> findByCostBiggerThan(int min) {
+//        return productRepository.findProductByCostBiggerThan(min);
+//    }
+//
+//    public List<Product> findByCostLessThan(int max) {
+//        return productRepository.findProductByCostLessThan(max);
+//    }
 
 }
