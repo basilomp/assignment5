@@ -29,6 +29,11 @@ public class Product {
         this.cost = cost;
     }
 
+    public Product(String title, int cost) {
+        this.title = title;
+        this.cost = cost;
+    }
+
     public Product() {
     }
 
