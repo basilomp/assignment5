@@ -1,8 +1,11 @@
 package ru.geekbrains.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
+import java.util.List;
 
 @Entity
 @Table(name = "product_table")
@@ -29,6 +32,16 @@ public class Product {
     public Product() {
     }
 
+
+    @ManyToMany
+    @JsonIgnore
+    @JoinTable(
+            name = "products_customers",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "customer_id")
+    )
+    private List<Customer> customers;
+
     public Long getId() {
         return id;
     }
@@ -51,6 +64,15 @@ public class Product {
 
     public void setCost(int cost) {
         this.cost = cost;
+    }
+
+    @Transactional
+    public List<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(List<Customer> customers) {
+        this.customers = customers;
     }
 
     @Override
