@@ -1,17 +1,17 @@
-spring:
-  jpa:
-    database: POSTGRESQL
-    show-sql: true
-    hibernate:
-      ddl-auto: create-drop
-  datasource:
-    url: jdbc:postgresql://localhost:5432/shop
-    username: postgres
-    password: root
-    driverClassName: org.postgresql.Driver
-  sql:
-    init:
-      platform: postgres
+#spring:
+#  jpa:
+#    database: POSTGRESQL
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: create-drop
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/shop
+#    username: postgres
+#    password: root
+#    driverClassName: org.postgresql.Driver
+#  sql:
+#    init:
+#      platform: postgres
 
 server:
   port: 8189
